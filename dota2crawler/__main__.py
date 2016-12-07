@@ -79,7 +79,7 @@ def download(downlist, save_dir):
 # other page image url
 def get_all(pagenum):
     for i in range(2, pagenum + 1):
-        response = get_response(DOTA2_URL + '/' + 'page' + i)
+        response = get_response(DOTA2_URL + '/' + 'page' + str(i))
         soup = BeautifulSoup(response, 'lxml')
         divtags = soup.find_all(class_='preview_size')
         downlist = []
@@ -92,5 +92,9 @@ def get_all(pagenum):
 def run():
     response = get_response(DOTA2_URL)
     soup, pagenum = get_info(response)
-    get_one(soup, save_dir)
+    # get_one(soup, save_dir)
     get_all(pagenum)
+
+
+if __name__ == '__main__':
+    run()
