@@ -26,7 +26,7 @@ setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'dota2crawler = dota2crawler.__main__'
+            'dota2crawler = dota2crawler.__main__:run'
         ]
     },
     license='MIT License',

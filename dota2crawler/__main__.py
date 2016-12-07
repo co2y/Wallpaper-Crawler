@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import print_function, unicode_literals
 from bs4 import BeautifulSoup
-from utils.utils import print_error, print_success, unicodeize
+from dota2crawler.utils.utils import print_error, print_success, unicodeize
 from dota2crawler.config import BASE_URL, DOTA2_URL
 from dota2crawler.config import IS_PYTHON3
 import requests
@@ -83,4 +83,5 @@ def get_all():
 
 
 # run
-get_info(DOTA2_URL)
+def run():
+    get_info(DOTA2_URL)
