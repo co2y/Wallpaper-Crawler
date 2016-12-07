@@ -9,6 +9,10 @@ python:
 
 install:
     - python setup.py install
+    - pip install coveralls
 
 script:
-    - dota2crawler
+    - nosetests --cover-package=dota2crawler --with-coverage
+
+after_success:
+    coveralls

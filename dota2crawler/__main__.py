@@ -43,27 +43,26 @@ def get_response(url):
 
 
 # get all pages and image url
-def get_info(url):
-    response = get_response(url)
+def get_info(response):
     if not response:
         print_error('error: failed to request url')
     else:
         soup = BeautifulSoup(response, 'lxml')
         pagenum = int(soup.select('.page_select')[-1].string)
-    get_one(soup)
+    return soup, pagenum
 
 
 # first page image url
-def get_one(soup):
+def get_one(soup, save_dir):
     divtags = soup.find_all(class_='preview_size')
     downlist = []
     for divtag in divtags:
         downlist.append(divtag.h3.a['href'])
-    download(downlist)
+    download(downlist, save_dir)
 
 
 # save wallpaper to local
-def download(downlist):
+def download(downlist, save_dir):
     for url in downlist:
         filename = url.split('/')[-2]
         resolution = url.split('/')[-1]
@@ -78,10 +77,20 @@ def download(downlist):
 
 
 # other page image url
-def get_all():
-    pass
+def get_all(pagenum):
+    for i in range(2, pagenum + 1):
+        response = get_response(DOTA2_URL + '/' + 'page' + i)
+        soup = BeautifulSoup(response, 'lxml')
+        divtags = soup.find_all(class_='preview_size')
+        downlist = []
+        for divtag in divtags:
+            downlist.append(divtag.h3.a['href'])
+        download(downlist, save_dir)
 
 
 # run
 def run():
-    get_info(DOTA2_URL)
+    response = get_response(DOTA2_URL)
+    soup, pagenum = get_info(response)
+    get_one(soup, save_dir)
+    get_all(pagenum)
